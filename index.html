@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rizky Wahyu Kristiawan — ERP &amp; System Consultant</title>
+<meta name="description" content="ERP and System Consultant in Jakarta. ERP implementation, requirements analysis, gap analysis, system configuration, UAT, Odoo, and cloud infrastructure.">
+<meta name="author" content="Rizky Wahyu Kristiawan">
+<link rel="canonical" href="https://example.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rizky Wahyu Kristiawan — ERP &amp; System Consultant">
+<meta property="og:description" content="ERP and System Consultant in Jakarta. ERP implementation, requirements analysis, gap analysis, system configuration, UAT, Odoo, and cloud infrastructure.">
+<meta property="og:url" content="https://example.com/">
+<meta property="og:image" content="assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;450;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --ink:        #16222e;
+  --ink-2:      #2c3d4a;
+  --muted:      #63737f;
+  --faint:      #8f9ba4;
+  --paper:      #fbfbf9;
+  --panel:      #edeee9;
+  --panel-2:    #e3e5df;
+  --rule:       #d6d9d2;
+  --rule-soft:  #e6e8e2;
+  --accent:     #1e5b52;
+  --accent-ink: #143f39;
+
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+
+  --rail: 150px;
+  --gap: 56px;
+  --pad: 40px;
+  --maxw: 1220px;
+
+  --t: 320ms cubic-bezier(.2,.7,.3,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+/* a faint column grid running the height of the page — the spec-sheet
+   signature the rest of the layout is measured against */
+.gridlines{
+  position:fixed; inset:0; z-index:0;
+  pointer-events:none;
+  display:flex; justify-content:center;
+}
+.gridlines__in{
+  width:100%; max-width:var(--maxw);
+  padding:0 var(--pad);
+  display:grid; grid-template-columns:repeat(6,1fr);
+}
+.gridlines__in span{ border-left:1px solid rgba(22,34,46,.05); }
+.gridlines__in span:first-child{ border-left:0; }
+
+.nav, main, .foot{ position:relative; z-index:1; }
+
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16.5px;
+  line-height:1.65;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+img{ max-width:100%; display:block; }
+
+a{ color:inherit; }
+
+::selection{ background:var(--accent); color:#fff; }
+
+:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+.skip{
+  position:absolute; left:-9999px; top:0;
+  background:var(--ink); color:var(--paper);
+  padding:12px 18px; z-index:200; font-size:14px;
+}
+.skip:focus{ left:12px; top:12px; }
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.wrap{
+  width:100%;
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 var(--pad);
+}
+
+section[id]{ scroll-margin-top:86px; }
+
+.band{
+  padding:112px 0;
+  border-top:1px solid var(--rule-soft);
+}
+.band--tight{ padding:88px 0; }
+.band--panel{
+  background:var(--panel); border-top-color:var(--panel-2);
+  position:relative; z-index:1;
+}
+
+/* the work section runs dark — the page's strongest beat, on its
+   most important content. Tokens are redefined locally so every
+   component inside adapts without a second set of rules. */
+.band--ink{
+  background:#16222e;
+  position:relative; z-index:1;
+  border-top-color:#16222e;
+  --ink:#eef4f7;
+  --ink-2:#b4c4ce;
+  --muted:#8698a4;
+  --faint:#657a87;
+  --rule:#31434e;
+  --rule-soft:#25353f;
+  --accent:#7fc3b4;
+  color:var(--ink);
+}
+
+.split{
+  display:grid;
+  grid-template-columns:var(--rail) 1fr;
+  gap:var(--gap);
+  align-items:start;
+}
+/* grid children default to min-width:auto, which lets the scroll
+   container push past its column and create page-level overflow */
+.split > *{ min-width:0; }
+
+/* the left metadata rail — carries position, not decoration */
+.rail{
+  position:sticky;
+  top:104px;
+  font-size:12.5px;
+  letter-spacing:.07em;
+  color:var(--faint);
+  line-height:1.5;
+}
+.rail b{
+  display:block;
+  font-family:var(--serif);
+  font-size:26px;
+  font-weight:300;
+  letter-spacing:0;
+  color:var(--rule);
+  margin-bottom:6px;
+}
+.rail span{ display:block; color:var(--muted); font-weight:450; }
+
+h1,h2,h3,h4{ margin:0; font-weight:400; }
+
+.h-sec{
+  font-family:var(--serif);
+  font-size:clamp(30px,3.6vw,42px);
+  line-height:1.12;
+  letter-spacing:-.015em;
+  font-weight:400;
+  max-width:20ch;
+}
+.lede{
+  margin:22px 0 0;
+  font-size:17.5px;
+  line-height:1.68;
+  color:var(--ink-2);
+  max-width:62ch;
+}
+p{ margin:0 0 1.05em; }
+p:last-child{ margin-bottom:0; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(251,251,249,.86);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color var(--t), background var(--t);
+}
+.nav.is-stuck{ border-bottom-color:var(--rule); }
+
+.nav__in{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px;
+  height:68px;
+}
+.brand{
+  font-family:var(--serif);
+  font-size:19px;
+  letter-spacing:-.01em;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.brand em{ font-style:normal; color:var(--faint); }
+
+.nav__links{
+  display:flex; align-items:center; gap:30px;
+  list-style:none; margin:0; padding:0;
+}
+.nav__links a{
+  text-decoration:none;
+  font-size:14.5px;
+  font-weight:450;
+  color:var(--ink-2);
+  padding:4px 0;
+  position:relative;
+}
+.nav__links a::after{
+  content:""; position:absolute; left:0; right:0; bottom:0;
+  height:1px; background:var(--ink);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform var(--t);
+}
+.nav__links a:hover::after,
+.nav__links a[aria-current="true"]::after{ transform:scaleX(1); }
+
+.btn{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--sans);
+  font-size:14.5px; font-weight:500;
+  text-decoration:none;
+  padding:10px 18px;
+  border:1px solid var(--ink);
+  background:var(--ink); color:var(--paper);
+  cursor:pointer;
+  transition:background var(--t), color var(--t), border-color var(--t);
+}
+.btn:hover{ background:var(--accent); border-color:var(--accent); }
+.btn--ghost{ background:transparent; color:var(--ink); border-color:var(--rule); }
+.btn--ghost:hover{ background:transparent; color:var(--accent); border-color:var(--accent); }
+.btn--sm{ padding:8px 14px; font-size:13.5px; }
+
+.burger{
+  display:none;
+  width:42px; height:42px;
+  border:1px solid var(--rule);
+  background:transparent; cursor:pointer;
+  padding:0; position:relative;
+}
+.burger i{
+  position:absolute; left:11px; width:18px; height:1.5px;
+  background:var(--ink); transition:transform var(--t), opacity var(--t);
+}
+.burger i:nth-child(1){ top:16px; }
+.burger i:nth-child(2){ top:24px; }
+.nav.is-open .burger i:nth-child(1){ transform:translateY(4px) rotate(45deg); }
+.nav.is-open .burger i:nth-child(2){ transform:translateY(-4px) rotate(-45deg); }
+
+.drawer{
+  display:none;
+  border-top:1px solid var(--rule);
+  background:var(--paper);
+}
+.drawer ul{ list-style:none; margin:0; padding:10px 0 22px; }
+.drawer a{
+  display:block; padding:14px 0;
+  text-decoration:none; font-size:19px;
+  font-family:var(--serif);
+  border-bottom:1px solid var(--rule-soft);
+}
+.drawer .btn{ margin-top:20px; width:100%; justify-content:center; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{ padding:104px 0 96px; }
+.hero__grid{
+  display:grid;
+  grid-template-columns:1fr 236px;
+  gap:64px;
+  align-items:end;
+}
+.hero__loc{
+  font-size:13px; letter-spacing:.08em; color:var(--muted);
+  margin:0 0 30px;
+  display:flex; align-items:center; gap:11px;
+}
+.hero__loc::before{
+  content:""; width:26px; height:1px; background:var(--rule); flex:none;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(46px,7.4vw,92px);
+  line-height:.98;
+  letter-spacing:-.028em;
+  font-weight:300;
+  margin:0;
+}
+.hero h1 .ln{ display:block; overflow:hidden; }
+.hero h1 .ln > span{ display:block; }
+.hero__role{
+  margin:28px 0 0;
+  font-size:19px;
+  font-weight:500;
+  letter-spacing:-.005em;
+  padding-top:26px;
+  border-top:1px solid var(--rule);
+  max-width:640px;
+}
+.hero__stmt{
+  margin:18px 0 0;
+  font-size:17.5px;
+  color:var(--ink-2);
+  line-height:1.68;
+  max-width:56ch;
+}
+.hero__cta{
+  margin-top:38px;
+  display:flex; flex-wrap:wrap; align-items:center; gap:14px;
+}
+.hero__li{
+  font-size:14.5px; text-decoration:none; color:var(--muted);
+  display:inline-flex; align-items:center; gap:7px;
+  margin-left:6px;
+  border-bottom:1px solid transparent;
+  transition:color var(--t), border-color var(--t);
+}
+.hero__li:hover{ color:var(--accent); border-bottom-color:var(--accent); }
+
+/* the one bold structural moment: the three layers, standing */
+.layers{
+  border-left:1px solid var(--rule);
+  padding-left:26px;
+}
+.layers dt{
+  font-family:var(--serif);
+  font-size:27px;
+  line-height:1.05;
+  font-weight:400;
+  letter-spacing:-.01em;
+}
+.layers dd{
+  margin:5px 0 0;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.layers .lyr + .lyr{
+  margin-top:20px; padding-top:20px; border-top:1px solid var(--rule-soft);
+}
+.layers .lyr:nth-child(2) dt{ color:var(--accent); }
+
+/* ============================================================
+   POSITIONING / PROCESS
+   ============================================================ */
+
+/* hero fact strip — countable facts, not claims */
+.facts{
+  margin-top:62px;
+  padding-top:22px;
+  border-top:1px solid var(--rule);
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+.facts div{ padding-right:24px; }
+.facts div + div{ padding-left:24px; border-left:1px solid var(--rule-soft); }
+.facts dt{
+  font-family:var(--serif); font-size:27px; line-height:1.1;
+  font-weight:400; letter-spacing:-.015em;
+}
+.facts dd{ margin:5px 0 0; font-size:13px; color:var(--muted); line-height:1.45; }
+
+/* ============================================================
+   PROCESS SPINE
+   ============================================================ */
+.flow{
+  margin-top:56px;
+  display:grid; grid-template-columns:repeat(6,1fr);
+  border-top:1px solid var(--ink);
+}
+.flow__step{
+  position:relative;
+  padding:30px 20px 26px 0;
+  transition:background var(--t);
+}
+.flow__step + .flow__step{ padding-left:20px; }
+/* the node sitting on the spine */
+.flow__dot{
+  position:absolute; top:-5px; left:0;
+  width:9px; height:9px; border-radius:50%;
+  background:var(--paper); border:1.5px solid var(--ink);
+  transition:background var(--t), transform var(--t), border-color var(--t);
+}
+.flow__step + .flow__step .flow__dot{ left:20px; }
+.flow__step:hover .flow__dot{ background:var(--accent); border-color:var(--accent); transform:scale(1.35); }
+.flow__lyr{
+  font-size:11px; letter-spacing:.09em; color:var(--faint);
+  display:block; margin-bottom:11px;
+}
+.flow__t{
+  font-family:var(--serif);
+  font-size:19px; font-weight:400; line-height:1.2; letter-spacing:-.012em;
+  transition:color var(--t);
+}
+.flow__step:hover .flow__t{ color:var(--accent); }
+.flow__d{ font-size:13px; color:var(--muted); margin-top:9px; line-height:1.55; }
+
+/* ============================================================
+   CREDENTIALS
+   ============================================================ */
+.cred{
+  margin-top:46px;
+  display:grid; grid-template-columns:1.5fr 1fr 1fr;
+  gap:0;
+  border-top:1px solid var(--ink);
+}
+.cred__c{ padding:26px 30px 0 0; }
+.cred__c + .cred__c{ padding-left:30px; border-left:1px solid var(--rule); }
+.cred__h{
+  font-family:var(--serif); font-size:19px; letter-spacing:-.01em;
+  margin-bottom:16px;
+}
+.cred__l{ list-style:none; margin:0; padding:0; }
+.cred__l li{
+  font-size:14.5px; color:var(--ink-2); line-height:1.5;
+  padding:9px 0; border-bottom:1px solid var(--rule-soft);
+}
+.cred__l li:last-child{ border-bottom:0; }
+.cred__l b{ font-weight:500; color:var(--ink); display:block; }
+.cred__l em{ font-style:normal; color:var(--muted); font-size:13px; }
+
+/* ============================================================
+   SELECTED WORK
+   ============================================================ */
+.work{ margin-top:52px; border-top:1px solid var(--ink); }
+.work__item{ border-bottom:1px solid var(--rule); }
+
+.work__head{
+  width:100%; display:grid;
+  grid-template-columns:58px 1fr 200px 30px;
+  gap:22px; align-items:baseline;
+  background:none; border:0; padding:26px 0;
+  font:inherit; color:inherit; text-align:left; cursor:pointer;
+  transition:padding-left var(--t);
+}
+.work__head:hover{ padding-left:9px; }
+.work__n{
+  font-family:var(--serif); font-size:15px; color:var(--faint);
+  font-variant-numeric:tabular-nums;
+}
+.work__t{
+  font-family:var(--serif);
+  font-size:clamp(22px,2.5vw,31px);
+  line-height:1.16; letter-spacing:-.015em; font-weight:400;
+}
+.work__m{ font-size:13.5px; color:var(--muted); line-height:1.45; }
+.work__ar{
+  justify-self:end; align-self:center;
+  width:11px; height:11px; border-right:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink);
+  transform:rotate(45deg);
+  transition:transform var(--t);
+}
+.work__head[aria-expanded="true"] .work__ar{ transform:rotate(-135deg); }
+.work__head[aria-expanded="true"] .work__t{ color:var(--accent); }
+
+.work__panel{
+  display:grid; grid-template-rows:0fr;
+  transition:grid-template-rows var(--t);
+}
+.work__panel.is-open{ grid-template-rows:1fr; }
+.work__panelin{ overflow:hidden; }
+.work__body{
+  padding:8px 0 40px 80px;
+  display:grid; grid-template-columns:1.25fr 1fr;
+  gap:56px;
+}
+.work__body h4{
+  font-size:12.5px; letter-spacing:.08em; color:var(--faint);
+  font-weight:500; margin:0 0 9px;
+}
+.work__body h4:not(:first-child){ margin-top:26px; }
+.work__body p{ font-size:15.5px; line-height:1.65; color:var(--ink-2); }
+.work__body ul{ margin:0; padding-left:19px; }
+.work__body li{ font-size:15.5px; line-height:1.6; color:var(--ink-2); margin-bottom:7px; }
+.tags{ display:flex; flex-wrap:wrap; gap:7px; padding:0; margin:0; list-style:none; }
+.tags li{
+  font-size:12.5px; color:var(--ink-2); margin:0;
+  border:1px solid var(--rule); padding:4px 10px; line-height:1.4;
+}
+.todo{
+  font-size:14px; color:var(--faint); font-style:italic;
+  border-left:2px solid var(--rule); padding-left:13px;
+}
+
+/* ============================================================
+   CLIENT ENGAGEMENTS — carousel
+   ============================================================ */
+.cx{ margin-top:46px; }
+.cx__track{
+  display:flex; gap:0;
+  overflow-x:auto; scroll-snap-type:x mandatory;
+  scrollbar-width:none; -ms-overflow-style:none;
+  border-top:1px solid var(--ink);
+  padding-bottom:2px;
+}
+.cx__track::-webkit-scrollbar{ display:none; }
+.cx__slide{
+  flex:0 0 28%;
+  scroll-snap-align:start;
+  padding:26px 28px 40px 0;
+  border-right:1px solid var(--rule);
+  min-height:186px;
+}
+.cx__slide:last-child{ border-right:0; }
+.cx__slide + .cx__slide{ padding-left:28px; }
+.cx__n{
+  font-size:11.5px; letter-spacing:.1em; color:var(--faint);
+  font-variant-numeric:tabular-nums; display:block; margin-bottom:16px;
+}
+.cx__name{
+  font-family:var(--serif); font-size:23px; line-height:1.18;
+  letter-spacing:-.012em; font-weight:400;
+}
+.cx__kind{ font-size:13px; color:var(--muted); margin-top:10px; }
+.cx__bar{
+  margin-top:26px; display:flex; align-items:center; gap:16px;
+}
+.cx__btn{
+  width:40px; height:40px; border:1px solid var(--rule);
+  background:transparent; cursor:pointer; padding:0;
+  display:grid; place-items:center;
+  transition:border-color var(--t), background var(--t);
+}
+.cx__btn:hover:not(:disabled){ border-color:var(--ink); }
+.cx__btn:disabled{ opacity:.32; cursor:default; }
+.cx__btn i{
+  width:9px; height:9px; border-top:1.5px solid var(--ink); border-left:1.5px solid var(--ink);
+  display:block;
+}
+.cx__btn--prev i{ transform:rotate(-45deg); margin-left:3px; }
+.cx__btn--next i{ transform:rotate(135deg); margin-right:3px; }
+.cx__count{
+  font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums;
+  letter-spacing:.06em;
+}
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.xp{ margin-top:48px; border-top:1px solid var(--ink); }
+.xp__row{
+  display:grid; grid-template-columns:168px 1fr 170px;
+  gap:32px; padding:26px 0; border-bottom:1px solid var(--rule);
+  align-items:baseline;
+}
+.xp__yr{
+  font-size:13.5px; color:var(--muted); font-variant-numeric:tabular-nums;
+  letter-spacing:.02em;
+}
+.xp__co{ font-family:var(--serif); font-size:24px; line-height:1.2; letter-spacing:-.012em; }
+.xp__ro{ font-size:15px; color:var(--ink-2); margin-top:6px; }
+.xp__note{ font-size:13px; color:var(--muted); line-height:1.5; }
+.xp__now{
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:12.5px; color:var(--accent); letter-spacing:.04em;
+}
+.xp__now::before{
+  content:""; width:6px; height:6px; background:var(--accent); border-radius:50%;
+}
+
+/* ============================================================
+   CAPABILITIES
+   ============================================================ */
+.caps{
+  margin-top:48px;
+  display:grid; grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--ink);
+}
+.caps__g{
+  padding:26px 26px 34px 0;
+  border-bottom:1px solid var(--rule);
+  border-right:1px solid var(--rule);
+}
+.caps__g:nth-child(3n){ border-right:0; padding-right:0; }
+.caps__g:nth-child(n+2){ padding-left:26px; }
+.caps__g:nth-child(3n+1){ padding-left:0; }
+.caps__h{
+  font-family:var(--serif); font-size:20px; letter-spacing:-.01em;
+  margin-bottom:15px; line-height:1.2;
+}
+.caps__l{ list-style:none; margin:0; padding:0; }
+.caps__l li{
+  font-size:14.5px; color:var(--ink-2); padding:5px 0;
+  border-bottom:1px solid var(--rule-soft); line-height:1.45;
+}
+.caps__l li:last-child{ border-bottom:0; }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about__grid{ display:grid; grid-template-columns:1.35fr 1fr; gap:76px; align-items:start; }
+.about__body p{ font-size:17px; line-height:1.72; color:var(--ink-2); max-width:60ch; }
+.about__body p:first-child{ color:var(--ink); font-size:18px; }
+
+.story{ border-left:1px solid var(--rule); padding-left:28px; }
+.story__i{ position:relative; padding:0 0 26px; }
+.story__i:last-child{ padding-bottom:0; }
+.story__i::before{
+  content:""; position:absolute; left:-33px; top:9px;
+  width:9px; height:1px; background:var(--rule);
+}
+.story__i:last-child::before{ background:var(--accent); width:17px; left:-33px; }
+.story__t{ font-size:15px; font-weight:500; letter-spacing:-.005em; }
+.story__i:last-child .story__t{ color:var(--accent); }
+.story__y{ font-size:12.5px; color:var(--faint); margin-top:3px; font-variant-numeric:tabular-nums; }
+
+/* ============================================================
+   CONTACT + FOOTER
+   ============================================================ */
+.contact{ background:var(--ink); color:var(--paper); padding:118px 0; }
+.contact h2{
+  font-family:var(--serif);
+  font-size:clamp(34px,5.2vw,62px);
+  line-height:1.06; letter-spacing:-.025em; font-weight:300;
+  max-width:16ch;
+}
+.contact__lede{
+  margin:26px 0 0; font-size:17px; color:#a9b7c1; max-width:52ch; line-height:1.68;
+}
+.contact__rows{ margin-top:44px; border-top:1px solid #2e414f; max-width:660px; }
+.contact__row{
+  display:flex; align-items:baseline; justify-content:space-between; gap:24px;
+  padding:19px 0; border-bottom:1px solid #2e414f;
+  text-decoration:none;
+  transition:padding-left var(--t);
+}
+.contact__row:hover{ padding-left:9px; }
+.contact__k{ font-size:12.5px; letter-spacing:.09em; color:#7d8d98; }
+.contact__v{ font-size:17px; }
+.contact__row:hover .contact__v{ color:#8ec9bd; }
+.contact__cta{ margin-top:40px; display:flex; flex-wrap:wrap; gap:13px; }
+.contact .btn{ background:var(--paper); color:var(--ink); border-color:var(--paper); }
+.contact .btn:hover{ background:#8ec9bd; border-color:#8ec9bd; color:var(--ink); }
+.contact .btn--ghost{ background:transparent; color:var(--paper); border-color:#3e5260; }
+.contact .btn--ghost:hover{ background:transparent; color:#8ec9bd; border-color:#8ec9bd; }
+
+.foot{ padding:44px 0 52px; border-top:1px solid var(--rule); }
+.foot__in{ display:flex; flex-wrap:wrap; gap:32px; justify-content:space-between; align-items:flex-end; }
+.foot__name{ font-family:var(--serif); font-size:19px; }
+.foot__meta{ font-size:13.5px; color:var(--muted); margin-top:5px; }
+.foot__links{ display:flex; gap:24px; list-style:none; margin:0; padding:0; }
+.foot__links a{ font-size:14px; color:var(--ink-2); text-decoration:none; border-bottom:1px solid var(--rule); padding-bottom:2px; }
+.foot__links a:hover{ color:var(--accent); border-bottom-color:var(--accent); }
+.foot__c{ font-size:12.5px; color:var(--faint); margin-top:30px; }
+
+.icn{ width:14px; height:14px; fill:currentColor; flex:none; }
+
+/* ============================================================
+   ONE ORCHESTRATED LOAD SEQUENCE (no per-section scroll reveals)
+   ============================================================ */
+.js .hero h1 .ln > span,
+.js .hero__loc,
+.js .hero__role,
+.js .hero__stmt,
+.js .hero__cta,
+.js .layers{
+  opacity:0; transform:translateY(14px);
+}
+.js .hero.is-in h1 .ln > span,
+.js .hero.is-in .hero__loc,
+.js .hero.is-in .hero__role,
+.js .hero.is-in .hero__stmt,
+.js .hero.is-in .hero__cta,
+.js .hero.is-in .layers{
+  opacity:1; transform:none;
+  transition:opacity .72s cubic-bezier(.2,.7,.3,1), transform .72s cubic-bezier(.2,.7,.3,1);
+}
+.js .hero.is-in .hero__loc{ transition-delay:.02s; }
+.js .hero.is-in h1 .ln:nth-child(1) > span{ transition-delay:.09s; }
+.js .hero.is-in h1 .ln:nth-child(2) > span{ transition-delay:.17s; }
+.js .hero.is-in .hero__role{ transition-delay:.28s; }
+.js .hero.is-in .hero__stmt{ transition-delay:.34s; }
+.js .hero.is-in .hero__cta{ transition-delay:.40s; }
+.js .hero.is-in .layers{ transition-delay:.30s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1080px){
+  :root{ --rail:120px; --gap:40px; }
+  .hero__grid{ grid-template-columns:1fr 200px; gap:44px; }
+  .flow{ grid-template-columns:repeat(3,1fr); }
+  .flow__step:nth-child(4)::before,
+  .flow__step:nth-child(4){ }
+  .flow__step:nth-child(-n+3){ border-bottom:1px solid var(--rule); }
+  .flow__step:nth-child(4){ padding-left:0; }
+  .flow__step:nth-child(4)::before{ display:none; }
+  .cx__slide{ flex-basis:36%; }
+  .gridlines__in{ grid-template-columns:repeat(4,1fr); }
+  .cred{ grid-template-columns:1fr 1fr; }
+  .cred__c:nth-child(3){ padding-left:0; border-left:0; border-top:1px solid var(--rule); margin-top:8px; }
+}
+
+@media (max-width:900px){
+  :root{ --pad:28px; }
+  .brand em{ display:none; }
+  .nav__links{ display:none; }
+  .nav .btn{ display:none; }
+  .burger{ display:block; }
+  .nav.is-open .drawer{ display:block; }
+
+  .band{ padding:76px 0; }
+  .band--tight{ padding:64px 0; }
+
+  .split{ grid-template-columns:1fr; gap:22px; }
+  .rail{ position:static; display:flex; align-items:baseline; gap:12px; padding-bottom:4px; border-bottom:1px solid var(--rule); }
+  .rail b{ font-size:17px; margin:0; }
+
+  .hero{ padding:64px 0 72px; }
+  .hero__grid{ grid-template-columns:1fr; gap:44px; align-items:start; }
+  .layers{ border-left:0; border-top:1px solid var(--rule); padding-left:0; padding-top:24px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .layers .lyr + .lyr{ margin:0; padding:0; border-top:0; }
+  .layers dt{ font-size:20px; }
+  .layers dd{ font-size:12px; }
+
+  .flow{ grid-template-columns:1fr 1fr; }
+  .flow__step{ padding:18px 14px 22px 0 !important; border-bottom:1px solid var(--rule); }
+  .flow__step:nth-child(even){ padding-left:14px !important; }
+  .flow__step:nth-child(even)::before{ display:block; }
+  .flow__step:nth-child(odd)::before{ display:none; }
+
+  .work__head{ grid-template-columns:36px 1fr 22px; gap:14px; padding:22px 0; }
+  .work__m{ display:none; }
+  .work__body{ grid-template-columns:1fr; gap:30px; padding:4px 0 32px 50px; }
+
+  .cx__slide{ flex-basis:74%; min-height:0; padding-bottom:30px; }
+
+  .xp__row{ grid-template-columns:1fr; gap:8px; }
+  .xp__yr{ order:-1; }
+
+  .caps{ grid-template-columns:1fr 1fr; }
+  .caps__g{ padding-left:0 !important; padding-right:22px !important; }
+  .caps__g:nth-child(even){ border-right:0; padding-left:22px !important; padding-right:0 !important; }
+  .caps__g:nth-child(odd){ border-right:1px solid var(--rule); }
+
+  .about__grid{ grid-template-columns:1fr; gap:46px; }
+
+  .contact{ padding:84px 0; }
+
+  .gridlines{ display:none; }
+
+  .facts{ grid-template-columns:1fr 1fr; margin-top:44px; row-gap:22px; }
+  .facts div{ padding-right:16px; }
+  .facts div + div{ padding-left:16px; }
+  .facts div:nth-child(odd){ padding-left:0; border-left:0; }
+  .facts dt{ font-size:21px; }
+
+  .flow__step{ padding:26px 14px 22px 0 !important; }
+  .flow__step:nth-child(even){ padding-left:14px !important; }
+  .flow__step + .flow__step .flow__dot{ left:14px; }
+  .flow__step:nth-child(odd) .flow__dot{ left:0; }
+  .flow__t{ font-size:17px; }
+
+  .cred__c{ padding:24px 0 0 0 !important; border-left:0 !important; }
+  .cred__c + .cred__c{ border-top:1px solid var(--rule); }
+}
+
+@media (max-width:560px){
+  :root{ --pad:22px; }
+  body{ font-size:16px; }
+  .hero h1{ font-size:clamp(38px,11.5vw,58px); }
+  .layers{ grid-template-columns:1fr; gap:0; }
+  .layers .lyr + .lyr{ margin-top:16px; padding-top:16px; border-top:1px solid var(--rule-soft); }
+  .flow{ grid-template-columns:1fr; }
+  .flow__step{ padding-left:0 !important; padding-right:0 !important; }
+  .flow__step::before{ display:none !important; }
+  .caps{ grid-template-columns:1fr; }
+  .caps__g{ border-right:0 !important; padding-left:0 !important; padding-right:0 !important; }
+  .work__body{ padding-left:0; }
+  .cx__slide{ flex-basis:86%; }
+  .hero__cta{ gap:10px; }
+  .hero__cta .btn{ flex:1 1 auto; justify-content:center; }
+  .facts{ grid-template-columns:1fr; row-gap:0; }
+  .facts div{ padding:14px 0 !important; border-left:0 !important; border-bottom:1px solid var(--rule-soft); }
+  .facts div:last-child{ border-bottom:0; }
+  .facts dt{ font-size:19px; }
+  .flow__step{ padding:24px 0 20px 0 !important; }
+  .flow__step .flow__dot{ left:0 !important; }
+  .cred{ grid-template-columns:1fr; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    transition-duration:.001ms !important;
+  }
+  .js .hero h1 .ln > span,
+  .js .hero__loc,.js .hero__role,.js .hero__stmt,.js .hero__cta,.js .layers{
+    opacity:1; transform:none;
+  }
+}
+
+@media print{
+  .nav,.contact__cta,.cx__bar{ display:none; }
+  body{ background:#fff; }
+  .work__panel{ grid-template-rows:1fr !important; }
+  .gridlines{ display:none; }
+  .band--ink{ background:#fff !important; color:#16222e !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="gridlines" aria-hidden="true">
+  <div class="gridlines__in"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+</div>
+
+<!-- =========================== NAV =========================== -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <div class="nav__in">
+      <a class="brand" href="#top">Rizky Wahyu Kristiawan<em> — ERP &amp; System Consultant</em></a>
+
+      <nav aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#capabilities">Capabilities</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn btn--sm" href="assets/Rizky_Wahyu_Kristiawan_CV.pdf" download>Download CV</a>
+
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+        <i></i><i></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer">
+    <div class="wrap">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://linkedin.com/in/rizkywk" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+      <a class="btn" href="assets/Rizky_Wahyu_Kristiawan_CV.pdf" download>Download CV</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- =========================== HERO =========================== -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero__grid">
+      <div>
+        <p class="hero__loc">Jakarta, Indonesia</p>
+
+        <h1>
+          <span class="ln"><span>Rizky Wahyu</span></span>
+          <span class="ln"><span>Kristiawan</span></span>
+        </h1>
+
+        <p class="hero__role">ERP &amp; System Consultant</p>
+
+        <p class="hero__stmt">
+          Five years spent between two rooms: the one where a business explains how it
+          actually works, and the one where the system has to be made to match. I gather
+          requirements, configure and deploy enterprise systems, and stay with them until
+          production runs clean.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn" href="#work">View selected work</a>
+          <a class="btn btn--ghost" href="assets/Rizky_Wahyu_Kristiawan_CV.pdf" download>Download CV</a>
+          <a class="hero__li" href="https://linkedin.com/in/rizkywk" target="_blank" rel="noopener">
+            <svg class="icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM0 8h5v16H0V8Zm7.5 0h4.8v2.2h.07c.67-1.2 2.3-2.5 4.73-2.5 5.06 0 6 3.2 6 7.4V24h-5v-7.6c0-1.8-.03-4.1-2.6-4.1-2.6 0-3 2-3 4v7.7h-5V8Z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <dl class="layers" aria-label="Where my work sits">
+        <div class="lyr">
+          <dt>Business</dt>
+          <dd>Requirements, process, and the constraints nobody wrote down.</dd>
+        </div>
+        <div class="lyr">
+          <dt>System</dt>
+          <dd>Analysis, gap assessment, configuration, integration, UAT.</dd>
+        </div>
+        <div class="lyr">
+          <dt>Technical</dt>
+          <dd>Servers, cloud, networks, and the code underneath.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <dl class="facts">
+      <div>
+        <dt>Five years</dt>
+        <dd>Hands-on ERP deployment and consulting</dd>
+      </div>
+      <div>
+        <dt>Nine</dt>
+        <dd>Enterprise client engagements delivered</dd>
+      </div>
+      <div>
+        <dt>Two countries</dt>
+        <dd>Indonesia and Singapore</dd>
+      </div>
+      <div>
+        <dt>Both sides</dt>
+        <dd>Functional consulting and development on the same engagement</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- =========================== POSITIONING =========================== -->
+<section class="band" id="positioning">
+  <div class="wrap split">
+    <div class="rail"><b>01</b><span>Positioning</span></div>
+    <div>
+      <h2 class="h-sec">Most ERP problems are not technical problems</h2>
+      <p class="lede">
+        They are translation problems. A finance team describes a payroll rule the way they
+        live it; the system expects it as configuration. Someone has to sit in both
+        conversations and carry the meaning across without losing it. That is the work I do,
+        and I do it across the whole span rather than handing off at the boundary.
+      </p>
+
+      <div class="flow">
+        <div class="flow__step">
+          <span class="flow__dot" aria-hidden="true"></span>
+          <span class="flow__lyr">Business</span>
+          <div class="flow__t">Business requirements</div>
+          <p class="flow__d">Sitting with the client to understand how the process actually runs.</p>
+        </div>
+        <div class="flow__step">
+          <span class="flow__dot" aria-hidden="true"></span>
+          <span class="flow__lyr">System</span>
+          <div class="flow__t">System analysis</div>
+          <p class="flow__d">Gap analysis between what they need and what the system does.</p>
+        </div>
+        <div class="flow__step">
+          <span class="flow__dot" aria-hidden="true"></span>
+          <span class="flow__lyr">System</span>
+          <div class="flow__t">Configuration</div>
+          <p class="flow__d">Building the setup and the database the implementation rests on.</p>
+        </div>
+        <div class="flow__step">
+          <span class="flow__dot" aria-hidden="true"></span>
+          <span class="flow__lyr">Technical</span>
+          <div class="flow__t">Integration</div>
+          <p class="flow__d">Connecting systems, environments, and networks so they hold together.</p>
+        </div>
+        <div class="flow__step">
+          <span class="flow__dot" aria-hidden="true"></span>
+          <span class="flow__lyr">System</span>
+          <div class="flow__t">Testing</div>
+          <p class="flow__d">UAT against the agreed requirement document, with the client in the room.</p>
+        </div>
+        <div class="flow__step">
+          <span class="flow__dot" aria-hidden="true"></span>
+          <span class="flow__lyr">Technical</span>
+          <div class="flow__t">Implementation</div>
+          <p class="flow__d">Cutover, training, documentation, and handover to the client's own team.</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== SELECTED WORK =========================== -->
+<section class="band band--ink" id="work">
+  <div class="wrap split">
+    <div class="rail"><b>02</b><span>Selected work</span></div>
+    <div>
+      <h2 class="h-sec">Selected work</h2>
+      <p class="lede">
+        Five engagements that show the range — enterprise ERP deployment, an infrastructure
+        migration, two Odoo builds where I held both the functional and the development side,
+        and current HR and payroll consulting work.
+      </p>
+
+      <div class="work">
+
+        <!-- 01 -->
+        <div class="work__item">
+          <button class="work__head" aria-expanded="false" aria-controls="w1" id="wb1">
+            <span class="work__n">01</span>
+            <span class="work__t">QAD ERP deployment for enterprise clients</span>
+            <span class="work__m">Technical Consultant · QAD, Progress OpenEdge</span>
+            <span class="work__ar" aria-hidden="true"></span>
+          </button>
+          <div class="work__panel" id="w1" role="region" aria-labelledby="wb1">
+            <div class="work__panelin">
+              <div class="work__body">
+                <div>
+                  <h4>Context</h4>
+                  <p>
+                    Manufacturing, pharmaceutical, chemical, and distribution companies across
+                    Indonesia and Singapore running QAD ERP as their core system. Each deployment
+                    started from the client's own environment and constraints rather than a
+                    standard template.
+                  </p>
+                  <h4>My role</h4>
+                  <p>Technical Consultant — PT Intelegensia Mustaka Indonesia.</p>
+                  <h4>What I did</h4>
+                  <ul>
+                    <li>Installed, deployed, and configured QAD ERP, covering Web UX, Web Sales, and WebServices Adapter (WSA) integration on Progress OpenEdge.</li>
+                    <li>Stood up on-premise environments end to end for clients staying off the cloud — server installation, OS configuration, and application setup on their own hardware.</li>
+                    <li>Worked through client requirements to shape the system solution that fit them, rather than handing over a standard configuration.</li>
+                    <li>Ran training and consultation sessions so client IT teams and end users could operate the system after handover.</li>
+                    <li>Wrote and maintained the technical documentation covering each system and its supporting infrastructure.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>System &amp; technology</h4>
+                  <ul class="tags">
+                    <li>QAD ERP</li><li>Progress OpenEdge</li><li>Web UX</li>
+                    <li>Web Sales</li><li>WSA</li><li>RHEL / CentOS / Rocky Linux</li>
+                  </ul>
+                  <h4>Scope</h4>
+                  <p>Full deployment lifecycle: installation, configuration, integration, user training, documentation, and handover.</p>
+                  <h4>Outcome</h4>
+                  <p class="todo">[Add project outcome]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 -->
+        <div class="work__item">
+          <button class="work__head" aria-expanded="false" aria-controls="w2" id="wb2">
+            <span class="work__n">02</span>
+            <span class="work__t">On-premise to Alibaba Cloud ERP migration</span>
+            <span class="work__m">Technical Consultant · Alibaba Cloud, IPSec</span>
+            <span class="work__ar" aria-hidden="true"></span>
+          </button>
+          <div class="work__panel" id="w2" role="region" aria-labelledby="wb2">
+            <div class="work__panelin">
+              <div class="work__body">
+                <div>
+                  <h4>Context</h4>
+                  <p>
+                    A client running its ERP estate on its own servers needed to move to cloud
+                    infrastructure without interrupting daily operations. The constraint that
+                    shaped everything: the business could not stop.
+                  </p>
+                  <h4>My role</h4>
+                  <p>Technical Consultant — sizing, provisioning, migration, and cutover.</p>
+                  <h4>What I did</h4>
+                  <ul>
+                    <li>Sized and provisioned the target environment on Alibaba Cloud.</li>
+                    <li>Moved the data and ran the cutover with minimal disruption to business operations.</li>
+                    <li>Configured IPSec site-to-site tunnels connecting the client's on-premise network to the cloud environment.</li>
+                    <li>Took over day-to-day cloud administration afterwards: provisioning, monitoring, patching, backup routines, and capacity maintenance.</li>
+                    <li>Wrote Python and shell scripts to take over backups and health checks that had been running by hand.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>System &amp; technology</h4>
+                  <ul class="tags">
+                    <li>Alibaba Cloud</li><li>QAD ERP</li><li>IPSec site-to-site VPN</li>
+                    <li>Linux</li><li>Python</li><li>Shell scripting</li>
+                  </ul>
+                  <h4>Scope</h4>
+                  <p>Infrastructure sizing, provisioning, data migration, cutover, network connectivity, and ongoing cloud administration.</p>
+                  <h4>Outcome</h4>
+                  <p class="todo">[Add project outcome]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 -->
+        <div class="work__item">
+          <button class="work__head" aria-expanded="false" aria-controls="w3" id="wb3">
+            <span class="work__n">03</span>
+            <span class="work__t">Odoo and QuickBooks integration</span>
+            <span class="work__m">Emasjid, Singapore · Functional consultant and developer</span>
+            <span class="work__ar" aria-hidden="true"></span>
+          </button>
+          <div class="work__panel" id="w3" role="region" aria-labelledby="wb3">
+            <div class="work__panelin">
+              <div class="work__body">
+                <div>
+                  <h4>Context</h4>
+                  <p>
+                    Emasjid, in Singapore, needed Odoo to work alongside QuickBooks, which meant
+                    the financial and accounting workflows around it had to be reconsidered rather
+                    than simply wired together.
+                  </p>
+                  <h4>My role</h4>
+                  <p>
+                    Functional consultant and developer on the same engagement — I gathered the
+                    requirements and then built what came out of them.
+                  </p>
+                  <h4>What I did</h4>
+                  <ul>
+                    <li>Gathered requirements directly from the client and worked through their business processes.</li>
+                    <li>Developed a custom Odoo module integrating the platform with QuickBooks.</li>
+                    <li>Reworked the surrounding financial and accounting workflows to match.</li>
+                    <li>Tested alongside the client to confirm the build matched how they work day to day.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>System &amp; technology</h4>
+                  <ul class="tags">
+                    <li>Odoo</li><li>Custom module development</li><li>QuickBooks integration</li><li>Python</li>
+                  </ul>
+                  <h4>Scope</h4>
+                  <p>Requirements gathering, business process analysis, system design, custom module development, and client testing.</p>
+                  <h4>Outcome</h4>
+                  <p class="todo">[Add project outcome]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="work__item">
+          <button class="work__head" aria-expanded="false" aria-controls="w4" id="wb4">
+            <span class="work__n">04</span>
+            <span class="work__t">Aircraft booking and maintenance log modules</span>
+            <span class="work__m">Vision Flight Pte Ltd, Singapore · Odoo</span>
+            <span class="work__ar" aria-hidden="true"></span>
+          </button>
+          <div class="work__panel" id="w4" role="region" aria-labelledby="wb4">
+            <div class="work__panelin">
+              <div class="work__body">
+                <div>
+                  <h4>Context</h4>
+                  <p>
+                    Vision Flight needed booking and maintenance records handled inside Odoo. Both
+                    had to fit aviation operating requirements, so the logic mattered more than the
+                    interface.
+                  </p>
+                  <h4>My role</h4>
+                  <p>Functional consultant and developer — requirements through to delivery.</p>
+                  <h4>What I did</h4>
+                  <ul>
+                    <li>Developed an aircraft booking module and an aircraft maintenance log module.</li>
+                    <li>Designed the scheduling logic behind booking and the record-keeping logic behind maintenance to fit aviation operating requirements.</li>
+                    <li>Turned the client's business processes into system design, then tested alongside them to confirm the fit.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>System &amp; technology</h4>
+                  <ul class="tags">
+                    <li>Odoo</li><li>Custom module development</li><li>Scheduling logic</li><li>Python</li>
+                  </ul>
+                  <h4>Scope</h4>
+                  <p>Two custom modules, from requirements gathering and system design through development and client testing.</p>
+                  <h4>Outcome</h4>
+                  <p class="todo">[Add project outcome]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="work__item">
+          <button class="work__head" aria-expanded="false" aria-controls="w5" id="wb5">
+            <span class="work__n">05</span>
+            <span class="work__t">HR and payroll system consulting</span>
+            <span class="work__m">Andal Software · Current engagement</span>
+            <span class="work__ar" aria-hidden="true"></span>
+          </button>
+          <div class="work__panel" id="w5" role="region" aria-labelledby="wb5">
+            <div class="work__panelin">
+              <div class="work__body">
+                <div>
+                  <h4>Context</h4>
+                  <p>
+                    Andal Software provides an HR, payroll, income tax, and attendance package for
+                    the Indonesian market. Payroll is unforgiving: the rules are specific to each
+                    client, and the configuration has to hold them exactly.
+                  </p>
+                  <h4>My role</h4>
+                  <p>System Consultant — current role.</p>
+                  <h4>What I did</h4>
+                  <ul>
+                    <li>Identify, analyze, and gather payroll business process requirements directly from clients.</li>
+                    <li>Analyze the gap between a client's existing processes and what the system can do, and propose workarounds for the limitations found.</li>
+                    <li>Build the configuration database each implementation rests on.</li>
+                    <li>Conduct User Acceptance Testing to confirm the application serves the client's needs and operates per the workarounds agreed in the User Requirement Document.</li>
+                    <li>Feed strategy and product observations back to the production team based on what clients keep asking for.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>System &amp; technology</h4>
+                  <ul class="tags">
+                    <li>HR system</li><li>Payroll</li><li>Income tax</li>
+                    <li>Attendance</li><li>Gap analysis</li><li>UAT / URD</li>
+                  </ul>
+                  <h4>Scope</h4>
+                  <p>Requirements gathering, gap analysis, configuration database, UAT, and product feedback.</p>
+                  <h4>Outcome</h4>
+                  <p class="todo">[Add project outcome]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== CLIENT ENGAGEMENTS =========================== -->
+<section class="band band--tight" id="clients">
+  <div class="wrap split">
+    <div class="rail"><b>03</b><span>Clients</span></div>
+    <div>
+      <h2 class="h-sec">Selected client engagements</h2>
+      <p class="lede">
+        Organisations I have delivered ERP consulting work for, through PT Intelegensia Mustaka
+        Indonesia.
+      </p>
+
+      <div class="cx">
+        <div class="cx__track" id="cxTrack" role="region" aria-label="Client engagements, scrollable" tabindex="0">
+          <article class="cx__slide"><span class="cx__n">01</span><h3 class="cx__name">YKK AP Indonesia</h3><p class="cx__kind">ERP consulting</p></article>
+          <article class="cx__slide"><span class="cx__n">02</span><h3 class="cx__name">Faber Castell International Indonesia</h3><p class="cx__kind">ERP consulting</p></article>
+          <article class="cx__slide"><span class="cx__n">03</span><h3 class="cx__name">PT Eisai Indonesia</h3><p class="cx__kind">ERP consulting</p></article>
+          <article class="cx__slide"><span class="cx__n">04</span><h3 class="cx__name">NOK Corporation</h3><p class="cx__kind">ERP consulting — Singapore &amp; Batam</p></article>
+          <article class="cx__slide"><span class="cx__n">05</span><h3 class="cx__name">PT Petro Oxo Nusantara</h3><p class="cx__kind">ERP consulting</p></article>
+          <article class="cx__slide"><span class="cx__n">06</span><h3 class="cx__name">PT Toppan Plasindo Lestari</h3><p class="cx__kind">ERP consulting</p></article>
+          <article class="cx__slide"><span class="cx__n">07</span><h3 class="cx__name">PT Multi Citra Rasa</h3><p class="cx__kind">ERP consulting</p></article>
+          <article class="cx__slide"><span class="cx__n">08</span><h3 class="cx__name">PT AKR Corporindo Tbk</h3><p class="cx__kind">ERP consulting</p></article>
+          <article class="cx__slide"><span class="cx__n">09</span><h3 class="cx__name">Sinar Baja Electric Group</h3><p class="cx__kind">ERP consulting</p></article>
+        </div>
+
+        <div class="cx__bar">
+          <button class="cx__btn cx__btn--prev" id="cxPrev" aria-label="Previous client" aria-controls="cxTrack"><i></i></button>
+          <button class="cx__btn cx__btn--next" id="cxNext" aria-label="Next client" aria-controls="cxTrack"><i></i></button>
+          <span class="cx__count" id="cxCount" aria-live="polite">01 / 09</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== EXPERIENCE =========================== -->
+<section class="band" id="experience">
+  <div class="wrap split">
+    <div class="rail"><b>04</b><span>Experience</span></div>
+    <div>
+      <h2 class="h-sec">Experience</h2>
+
+      <div class="xp">
+        <div class="xp__row">
+          <div class="xp__yr">2026 — Present</div>
+          <div>
+            <h3 class="xp__co">Andal Software</h3>
+            <p class="xp__ro">System Consultant</p>
+          </div>
+          <div class="xp__note"><span class="xp__now">Current role</span></div>
+        </div>
+
+        <div class="xp__row">
+          <div class="xp__yr">2023 — 2026</div>
+          <div>
+            <h3 class="xp__co">PT Intelegensia Mustaka Indonesia</h3>
+            <p class="xp__ro">Technical Consultant</p>
+          </div>
+          <div class="xp__note">QAD ERP deployment, Linux and cloud infrastructure, enterprise client engagements.</div>
+        </div>
+
+        <div class="xp__row">
+          <div class="xp__yr">2025 — Present</div>
+          <div>
+            <h3 class="xp__co">PT Mega Reka Konsultan</h3>
+            <p class="xp__ro">Technical Consultant — Odoo</p>
+          </div>
+          <div class="xp__note">Freelance, alongside full-time role. Functional consulting and custom development.</div>
+        </div>
+
+        <div class="xp__row">
+          <div class="xp__yr">2018 — 2023</div>
+          <div>
+            <h3 class="xp__co">BM Homeschooling</h3>
+            <p class="xp__ro">IT Specialist</p>
+          </div>
+          <div class="xp__note">Learning management system, exam-bank application, mobile development, and IT support.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== CAPABILITIES =========================== -->
+<section class="band band--panel" id="capabilities">
+  <div class="wrap split">
+    <div class="rail"><b>05</b><span>Capabilities</span></div>
+    <div>
+      <h2 class="h-sec">Capabilities</h2>
+      <p class="lede">Grouped by the kind of work they belong to, rather than by tool.</p>
+
+      <div class="caps">
+        <div class="caps__g">
+          <h3 class="caps__h">ERP &amp; system implementation</h3>
+          <ul class="caps__l">
+            <li>QAD ERP</li><li>Odoo</li><li>Epicor (project exposure)</li>
+            <li>System deployment</li><li>Configuration</li><li>Integration</li>
+          </ul>
+        </div>
+        <div class="caps__g">
+          <h3 class="caps__h">Functional consulting</h3>
+          <ul class="caps__l">
+            <li>Requirements gathering</li><li>Business process analysis</li>
+            <li>Gap analysis</li><li>UAT</li><li>Client consultation</li><li>User training</li>
+          </ul>
+        </div>
+        <div class="caps__g">
+          <h3 class="caps__h">Technical consulting</h3>
+          <ul class="caps__l">
+            <li>ERP infrastructure</li><li>Linux administration</li>
+            <li>Cloud infrastructure</li><li>Networking</li>
+            <li>Troubleshooting</li><li>Technical documentation</li>
+          </ul>
+        </div>
+        <div class="caps__g">
+          <h3 class="caps__h">Odoo</h3>
+          <ul class="caps__l">
+            <li>Functional consulting</li><li>Custom module development</li><li>System integration</li>
+          </ul>
+        </div>
+        <div class="caps__g">
+          <h3 class="caps__h">Cloud &amp; infrastructure</h3>
+          <ul class="caps__l">
+            <li>Alibaba Cloud</li><li>AWS</li>
+            <li>Red Hat Enterprise Linux, CentOS, Rocky Linux</li>
+            <li>IPSec site-to-site VPN</li><li>Hardening and performance tuning</li>
+          </ul>
+        </div>
+        <div class="caps__g">
+          <h3 class="caps__h">Programming</h3>
+          <ul class="caps__l">
+            <li>Python</li><li>Shell scripting</li><li>PHP</li><li>JavaScript</li>
+            <li>Flask, Django, Laravel</li><li>Flutter</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== CREDENTIALS =========================== -->
+<section class="band band--tight" id="credentials">
+  <div class="wrap split">
+    <div class="rail"><b>06</b><span>Credentials</span></div>
+    <div>
+      <h2 class="h-sec">Credentials</h2>
+
+      <div class="cred">
+        <div class="cred__c">
+          <h3 class="cred__h">Certifications</h3>
+          <ul class="cred__l">
+            <li><b>AWS re/Start Graduate</b><em>Amazon Web Services</em></li>
+            <li><b>Certificate of Competence — Program Analyst</b><em>BNSP</em></li>
+            <li><b>Certificate of Competence — Junior Web Developer</b><em>BNSP</em></li>
+            <li><b>CompTIA Security+</b><em>Training program</em></li>
+            <li><b>Cybersecurity Essentials, IT Essentials</b><em>Cisco Networking Academy</em></li>
+            <li><b>Front-End Web Developer</b><em>Coding Studio</em></li>
+          </ul>
+        </div>
+
+        <div class="cred__c">
+          <h3 class="cred__h">Education</h3>
+          <ul class="cred__l">
+            <li><b>Pamulang University</b><em>Bachelor's Degree, Informatics Engineering · 2019 — 2026</em></li>
+            <li><b>SMK Al Amanah</b><em>Vocational High School · 2015 — 2018</em></li>
+          </ul>
+        </div>
+
+        <div class="cred__c">
+          <h3 class="cred__h">Languages</h3>
+          <ul class="cred__l">
+            <li><b>Indonesian</b><em>Native</em></li>
+            <li><b>English</b><em>Professional working proficiency</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== ABOUT =========================== -->
+<section class="band" id="about">
+  <div class="wrap split">
+    <div class="rail"><b>07</b><span>About</span></div>
+    <div>
+      <h2 class="h-sec">About</h2>
+
+      <div class="about__grid" style="margin-top:34px">
+        <div class="about__body">
+          <p>
+            I started on the technical side. Servers, operating systems, the parts of an ERP
+            deployment that either work or do not. For five years at PT Intelegensia Mustaka
+            Indonesia I installed and configured QAD ERP for manufacturing, pharmaceutical,
+            chemical, and distribution clients across Indonesia and Singapore, kept the Linux
+            estate underneath it running, and handled one full migration from on-premise servers
+            to Alibaba Cloud.
+          </p>
+          <p>
+            What changed the shape of my work was sitting in the requirements conversations. Once
+            you have spent enough time troubleshooting a system in production, you start hearing
+            requirements differently — you can tell which ones will configure cleanly and which
+            ones are going to become a workaround. That is what pulled me toward the functional
+            side.
+          </p>
+          <p>
+            With Odoo I have held both roles on the same engagement: gathering requirements from
+            the client, then building the custom module myself. An integration with QuickBooks for
+            Emasjid in Singapore, aircraft booking and maintenance log modules for Vision Flight.
+            No handover in the middle, which means nothing gets lost in it.
+          </p>
+          <p>
+            Now I work as a System Consultant at Andal Software on HR and payroll implementations —
+            gathering payroll requirements, running gap analysis, building the configuration
+            database, and taking clients through UAT. Different domain, same job: make sure what
+            the business needs and what the system does end up being the same thing.
+          </p>
+        </div>
+
+        <div class="story" aria-label="Career progression">
+          <div class="story__i">
+            <div class="story__t">IT and technical foundation</div>
+            <div class="story__y">2018 — 2023</div>
+          </div>
+          <div class="story__i">
+            <div class="story__t">ERP technical consulting</div>
+            <div class="story__y">2023 — 2026</div>
+          </div>
+          <div class="story__i">
+            <div class="story__t">Deployment and cloud infrastructure</div>
+            <div class="story__y">2023 — 2026</div>
+          </div>
+          <div class="story__i">
+            <div class="story__t">Client requirements and system consulting</div>
+            <div class="story__y">2023 — 2026</div>
+          </div>
+          <div class="story__i">
+            <div class="story__t">Odoo functional consulting and development</div>
+            <div class="story__y">2025 — Present</div>
+          </div>
+          <div class="story__i">
+            <div class="story__t">HR and payroll system consulting</div>
+            <div class="story__y">2026 — Present</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== CONTACT =========================== -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let's talk about systems</h2>
+    <p class="contact__lede">
+      For professional opportunities, ERP projects, or system consulting discussions — a short
+      description of the problem is enough to start.
+    </p>
+
+    <div class="contact__rows">
+      <a class="contact__row" href="mailto:rizkywahyukristiawan@gmail.com">
+        <span class="contact__k">Email</span>
+        <span class="contact__v">rizkywahyukristiawan@gmail.com</span>
+      </a>
+      <a class="contact__row" href="https://linkedin.com/in/rizkywk" target="_blank" rel="noopener">
+        <span class="contact__k">LinkedIn</span>
+        <span class="contact__v">linkedin.com/in/rizkywk</span>
+      </a>
+      <a class="contact__row" href="tel:+6289605591892">
+        <span class="contact__k">Phone</span>
+        <span class="contact__v">(+62) 896 0559 1892</span>
+      </a>
+      <div class="contact__row" style="cursor:default">
+        <span class="contact__k">Based in</span>
+        <span class="contact__v">Jakarta, Indonesia</span>
+      </div>
+    </div>
+
+    <div class="contact__cta">
+      <a class="btn" href="mailto:rizkywahyukristiawan@gmail.com">Email me</a>
+      <a class="btn btn--ghost" href="https://linkedin.com/in/rizkywk" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn--ghost" href="assets/Rizky_Wahyu_Kristiawan_CV.pdf" download>Download CV</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- =========================== FOOTER =========================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__in">
+      <div>
+        <div class="foot__name">Rizky Wahyu Kristiawan</div>
+        <div class="foot__meta">ERP &amp; System Consultant · Jakarta, Indonesia</div>
+      </div>
+      <ul class="foot__links">
+        <li><a href="https://linkedin.com/in/rizkywk" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:rizkywahyukristiawan@gmail.com">Email</a></li>
+        <li><a href="assets/Rizky_Wahyu_Kristiawan_CV.pdf" download>Download CV</a></li>
+      </ul>
+    </div>
+    <div class="foot__c">© <span id="yr">2026</span> Rizky Wahyu Kristiawan. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  document.documentElement.classList.add('js');
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- year ---- */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ---- hero load sequence (the one orchestrated moment) ---- */
+  var hero = document.querySelector('.hero');
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () { hero.classList.add('is-in'); });
+  });
+
+  /* ---- nav: stuck state ---- */
+  var nav = document.getElementById('nav');
+  var onScroll = function () {
+    nav.classList.toggle('is-stuck', window.scrollY > 8);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ---- mobile drawer ---- */
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('drawer');
+
+  function setMenu(open) {
+    nav.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  burger.addEventListener('click', function () {
+    setMenu(burger.getAttribute('aria-expanded') !== 'true');
+  });
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+      setMenu(false);
+      burger.focus();
+    }
+  });
+
+  /* ---- selected work: expand in place ---- */
+  var heads = Array.prototype.slice.call(document.querySelectorAll('.work__head'));
+  heads.forEach(function (head) {
+    head.addEventListener('click', function () {
+      var open = head.getAttribute('aria-expanded') === 'true';
+      var panel = document.getElementById(head.getAttribute('aria-controls'));
+
+      if (!open) {
+        heads.forEach(function (other) {
+          if (other === head) return;
+          other.setAttribute('aria-expanded', 'false');
+          document.getElementById(other.getAttribute('aria-controls'))
+            .classList.remove('is-open');
+        });
+      }
+      head.setAttribute('aria-expanded', String(!open));
+      panel.classList.toggle('is-open', !open);
+    });
+  });
+
+  /* ---- client carousel ---- */
+  var track = document.getElementById('cxTrack');
+  var prev = document.getElementById('cxPrev');
+  var next = document.getElementById('cxNext');
+  var count = document.getElementById('cxCount');
+  var slides = Array.prototype.slice.call(track.children);
+  var total = slides.length;
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function currentIndex() {
+    var x = track.scrollLeft;
+    var best = 0, bestD = Infinity;
+    slides.forEach(function (s, i) {
+      var d = Math.abs(s.offsetLeft - track.offsetLeft - x);
+      if (d < bestD) { bestD = d; best = i; }
+    });
+    return best;
+  }
+
+  function sync() {
+    var i = currentIndex();
+    count.textContent = pad(i + 1) + ' / ' + pad(total);
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+  }
+
+  function go(dir) {
+    var i = Math.min(total - 1, Math.max(0, currentIndex() + dir));
+    track.scrollTo({
+      left: slides[i].offsetLeft - track.offsetLeft,
+      behavior: reduce ? 'auto' : 'smooth'
+    });
+  }
+
+  prev.addEventListener('click', function () { go(-1); });
+  next.addEventListener('click', function () { go(1); });
+
+  track.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  });
+
+  var tick;
+  track.addEventListener('scroll', function () {
+    clearTimeout(tick);
+    tick = setTimeout(sync, 90);
+  }, { passive: true });
+  window.addEventListener('resize', sync, { passive: true });
+  sync();
+
+  /* ---- nav: current section ---- */
+  var sections = ['work', 'experience', 'capabilities', 'about', 'contact']
+    .map(function (id) { return document.getElementById(id); })
+    .filter(Boolean);
+  var navLinks = {};
+  document.querySelectorAll('.nav__links a').forEach(function (a) {
+    navLinks[a.getAttribute('href').slice(1)] = a;
+  });
+
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var link = navLinks[en.target.id];
+        if (!link) return;
+        if (en.isIntersecting) {
+          Object.keys(navLinks).forEach(function (k) {
+            navLinks[k].removeAttribute('aria-current');
+          });
+          link.setAttribute('aria-current', 'true');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(function (s) { obs.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
